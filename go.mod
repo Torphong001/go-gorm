@@ -1,4 +1,4 @@
-module github.com/anusornc/go-gorm
+module github.com/Torphong001/go-gorm
 
 go 1.20
 
