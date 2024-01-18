@@ -22,7 +22,7 @@ func main() {
 	dbName := os.Getenv("DB_NAME")
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
-	
+
 	database, err := db.ConnectDatabase(dbType, dbUser, dbPassword, dbHost, dbPort ,dbName)
 	if err != nil {
 		log.Fatalf("failed to connect database: %v", err)
@@ -36,8 +36,20 @@ func main() {
 
 	r := gin.Default()
 
+	// api /items จะเป็นการเรียกใช้งานฟังก์ชัน GetItems ใน ItemRepository
 	r.GET("/items", itemRepo.GetItems)
+
+	// api /items/:id จะเป็นการเรียกใช้งานฟังก์ชัน GetItem ใน ItemRepository
 	r.POST("/items", itemRepo.PostItem)
+
+	// api /items/:id จะเป็นการเรียกใช้งานฟังก์ชัน GetItem ใน ItemRepository
+	r.GET("/items/:id", itemRepo.GetItem)
+
+	// api /items/:id จะเป็นการเรียกใช้งานฟังก์ชัน UpdateItem ใน ItemRepository
+	r.PUT("/items/:id", itemRepo.UpdateItem)
+
+	// api /items/:id จะเป็นการเรียกใช้งานฟังก์ชัน DeleteItem ใน ItemRepository
+	r.DELETE("/items/:id", itemRepo.DeleteItem)
 
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"message": "Not found"})
