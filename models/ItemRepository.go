@@ -23,15 +23,15 @@ func NewItemRepository(db *gorm.DB) *ItemRepository {
 // ฟังก์ชันนี้ parameter ที่รับมาจะเป็น pointer ของ gin.Context เพราะเราจะใช้ c.JSON ส่งค่ากลับไปให้ผู้ใช้งาน
 func (r *ItemRepository) GetItems(c *gin.Context) {
 	var items []Item
-	r.Db.Find(&items)
-	c.JSON(200, items)
+	r.Db.Find(&items)		//select * from items
+	c.JSON(200, items)		//ส่งข้อมูลกลับไป
 }
 
 // ทำหน้าที่เพิ่มข้อมูล Item ลงในฐานข้อมูล และส่งกลับไปให้ผู้ใช้งานผ่าน c.JSON(200, newItem)
 func (r *ItemRepository) PostItem(c *gin.Context) {
 	var newItem Item
 	c.BindJSON(&newItem)
-	r.Db.Create(&newItem)
+	r.Db.Create(&newItem)	//insert into items
 	c.JSON(200, newItem)
 }
 
@@ -40,7 +40,7 @@ func (r *ItemRepository) PostItem(c *gin.Context) {
 func (r *ItemRepository) GetItem(c *gin.Context) {
 	id := c.Param("id")
 	var item Item
-	r.Db.First(&item, id)
+	r.Db.First(&item, id)		//select * from item where id=id
 	c.JSON(200, item)
 }
 
@@ -48,9 +48,9 @@ func (r *ItemRepository) GetItem(c *gin.Context) {
 func (r *ItemRepository) UpdateItem(c *gin.Context) {
 	id := c.Param("id")
 	var item Item
-	r.Db.First(&item, id)
+	r.Db.First(&item, id)	//select * from item where id=id
 	c.BindJSON(&item)
-	r.Db.Save(&item)
+	r.Db.Save(&item)		//update items set ? where id=id
 	c.JSON(200, item)
 }
 
@@ -60,6 +60,6 @@ func (r *ItemRepository) UpdateItem(c *gin.Context) {
 func (r *ItemRepository) DeleteItem(c *gin.Context) {
 	id := c.Param("id")
 	var item Item
-	r.Db.Delete(&item, id)
+	r.Db.Delete(&item, id)		// delete from items where id=id
 	c.JSON(200, gin.H{"id" + id: "is deleted"})
 }

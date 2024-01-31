@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 	"github.com/gin-gonic/gin"
-	"github.com/anusornc/go-gorm/models"
-	"github.com/anusornc/go-gorm/db"
+	"github.com/Torphong001/go-gorm-db/models"
+	"github.com/Torphong001/go-gorm-db"
 	"github.com/joho/godotenv"
 )
 
